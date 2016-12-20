@@ -5,29 +5,18 @@ const getCurrentOrder = () => {
     $("#orderList").html("");
     $.get("order?action=getCurrentOrder", data => {
         data.orders.forEach(order => {
-            let state;
-            let cssClass = "";
-            switch (order.stateCode) {
-                case "-1":
-                    state = "Đang phục vụ";
-                    break;
-                case "0":
-                    state = "Đang tạm tính";
-                    cssClass = "stateChecking"
-                    break;
-            }
-            HTML += `<div class="orderItem ${cssClass}">
+            HTML += `<div class="orderItem">
             <div class="orderIcon"><img class="icon" src="img/order.png"/></div>
-            <div class="orderNo">Bill số: ${order.no}</div>
+            <div class="orderNo">Order số: ${order.id}</div>
             <div class="orderInfoContainer">
                 <table>
                     <tr>
-                        <td>Giờ vào:</td>
-                        <td>${order.inTime}</td>
+                        <td>Ngày order:</td>
+                        <td>${order.orderDate}</td>
                     </tr>
                     <tr>
                         <td>Trạng thái:</td>
-                        <td>${state}</td>
+                        <td>Chưa giao</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
@@ -80,18 +69,18 @@ const getOrderDetail = (orderID) => {
     });
 };
 const addOrderItem = () => {
-    let orderNo = prompt("Vui lòng nhập số bill");
-    if (orderNo != null) {
-        $.ajax({
-            async: false,
-            url: `order?action=addOrderItem&orderNo=${orderNo}`,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'GET'
-        });
-        getCurrentOrder();
-    }
+    let orderCustomerName = prompt("Vui lòng nhập tên khách hàng");
+    let orderAddress = prompt("Vui lòng nhập địa chỉ giao hàng");
+    let orderPhoneNumber = prompt("Vui lòng nhập số điện thoại");
+    $.ajax({
+        async: false,
+        url: `order?action=addOrderItem&orderCustomerName=${orderCustomerName}&orderAddress=${orderAddress}&orderPhoneNumber=${orderPhoneNumber}`,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'GET'
+    });
+    getCurrentOrder();
 };
 const modal = () => {
     var orderDetailModal = document.getElementById('orderDetail');
@@ -112,7 +101,7 @@ const getMenuTree = () => {
     jQuery.ajaxSetup({async: false});
     let child = 1;
     let HTML = `<tr class="treegrid-1">
-                    <td>THỰC ĐƠN</td>
+                    <td>SẢN PHẨM</td>
                 </tr>`;
     $.get("product?action=viewAll", product => {
         product.products.forEach(p => {
@@ -143,7 +132,7 @@ const getMenuTree = () => {
 };
 const addProductDetail = (id) => {
     let productID = id.split("-")[1];
-        $.ajax({
+    $.ajax({
         async: false,
         url: `orderDetail?action=addOrderDetail&orderID=${currentOrderID}&productID=${productID}&quantity=1`,
         cache: false,

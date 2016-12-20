@@ -24,9 +24,11 @@ public class OrderController extends HttpServlet {
         if (action.equals("getCurrentOrder")) {
             out.println(getCurrentOrder());
         }
-        if(action.equals("addOrderItem")){
-            int orderNo = Integer.parseInt(request.getParameter("orderNo"));
-            addOrderItem(orderNo);
+        if (action.equals("addOrderItem")) {
+            String orderCustomerName = request.getParameter("orderCustomerName");
+            String orderAddress = request.getParameter("orderAddress");
+            String orderPhoneNumber = request.getParameter("orderPhoneNumber");
+            addOrderItem(orderCustomerName, orderAddress, orderPhoneNumber);
         }
 
 
@@ -40,14 +42,11 @@ public class OrderController extends HttpServlet {
             Order o = list.get(i);
             json += "{";
             json += "\"id\": \"" + o.getOrderID() + "\",";
-            json += "\"no\": \"" + o.getOrderNo() + "\",";
-            SimpleDateFormat format = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
-            json += "\"inTime\": \"" + format.format(o.getOrderInTime()) + "\",";
-            if (o.getOrderOutTime() != null) {
-                json += "\"outTime\": \"" + format.format(o.getOrderOutTime()) + "\",";
-            } else {
-                json += "\"outTime\": \"\",";
-            }
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+            json += "\"orderDate\": \"" + format.format(o.getOrderDate()) + "\",";
+            json += "\"orderCustomerName\": \"" + o.getOrderCustomerName() + "\",";
+            json += "\"orderAddress\": \"" + o.getOrderAddress() + "\",";
+            json += "\"orderPhoneNumber\": \"" + o.getOrderPhoneNumber() + "\",";
             json += "\"stateCode\": \"" + o.getOrderStateCode() + "\"";
             json += "}";
             if (i < (list.size() - 1)) {
@@ -57,8 +56,9 @@ public class OrderController extends HttpServlet {
         json += "]}";
         return json;
     }
-    protected void addOrderItem(int orderNo){
+
+    protected void addOrderItem(String orderCustomerName, String orderAddress, String orderPhoneNumber) {
         OrderDAL od = new OrderDAL();
-        od.addOrderItem(orderNo);
+        od.addOrderItem(orderCustomerName, orderAddress,orderPhoneNumber);
     }
 }

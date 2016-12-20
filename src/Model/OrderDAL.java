@@ -14,23 +14,18 @@ public class OrderDAL extends GeneralDAL {
 
     public ArrayList<Order> getCurrentOrder() {
         ArrayList<Order> list = new ArrayList<Order>();
-        String query = "SELECT * FROM \"order\" WHERE OrderStateCode = -1 OR OrderStateCode = 0";
+        String query = "SELECT * FROM \"order\" WHERE OrderStateCode = -1";
         ResultSet result = runQuery(query);
         try {
             while (result.next()) {
                 Order o = new Order();
                 o.setOrderID(result.getInt(1));
-                o.setOrderNo(result.getInt(2));
-                Timestamp inTime = result.getTimestamp(3);
-                Timestamp outTime = null;
-                if (result.getTimestamp(4) != null) {
-                    outTime = result.getTimestamp(4);
-                    o.setOrderOutTime(outTime);
-                } else {
-                    o.setOrderOutTime(null);
-                }
-                o.setOrderInTime(inTime);
-                o.setOrderStateCode(result.getInt(5));
+                Timestamp orderDate = result.getTimestamp(6);
+                o.setOrderDate(orderDate);
+                o.setOrderStateCode(result.getInt(2));
+                o.setOrderCustomerName(result.getString(3));
+                o.setOrderAddress(result.getString(4));
+                o.setOrderPhoneNumber(result.getString(5));
                 list.add(o);
             }
         } catch (SQLException e) {
@@ -38,37 +33,36 @@ public class OrderDAL extends GeneralDAL {
         }
         return list;
     }
-    public Order getOrderByID(int orderID){
+
+    public Order getOrderByID(int orderID) {
         String query = "SELECT * FROM \"order\" WHERE OrderID = " + orderID;
         Order o = new Order();
         ResultSet result = runQuery(query);
         try {
             while (result.next()) {
                 o.setOrderID(result.getInt(1));
-                o.setOrderNo(result.getInt(2));
-                Timestamp inTime = result.getTimestamp(3);
-                Timestamp outTime = null;
-                if (result.getTimestamp(4) != null) {
-                    outTime = result.getTimestamp(4);
-                    o.setOrderOutTime(outTime);
-                } else {
-                    o.setOrderOutTime(null);
-                }
-                o.setOrderInTime(inTime);
-                o.setOrderStateCode(result.getInt(5));
+                Timestamp orderDate = result.getTimestamp(6);
+                o.setOrderDate(orderDate);
+                o.setOrderStateCode(result.getInt(2));
+                o.setOrderCustomerName(result.getString(3));
+                o.setOrderAddress(result.getString(4));
+                o.setOrderPhoneNumber(result.getString(5));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return o;
     }
-    public int addOrderItem(int orderNo) {
+
+    public int addOrderItem(String orderCustomerName, String orderAddress, String orderPhoneNumber) {
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String query = "INSERT INTO \"order\" (OrderNo, OrderInTime, OrderStateCode) ";
-        query += "VALUES (" + orderNo + ",";
-        query += "'" + sdf.format(d) +"',";
-        query += "-1)";
+        String query = "INSERT INTO \"order\" (OrderStateCode, OrderCustomerName, OrderAddress, OrderPhoneNumber, OrderDate) ";
+        query += "VALUES (-1,";
+        query += "N'" + orderCustomerName + "',";
+        query += "N'" + orderAddress + "',";
+        query += "N'" + orderPhoneNumber + "',";
+        query += "'" + sdf.format(d) + "')";
         return runCRUD(query);
     }
 }

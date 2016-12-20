@@ -4,10 +4,19 @@ import java.util.Date;
 
 public class Order {
     int orderID;
-    int orderNo;
-    Date orderInTime;
-    Date orderOutTime;
     int orderStateCode;
+    String orderCustomerName;
+    String orderAddress;
+    String orderPhoneNumber;
+    Date orderDate;
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
 
     public int getOrderID() {
         return orderID;
@@ -17,36 +26,36 @@ public class Order {
         this.orderID = orderID;
     }
 
-    public int getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(int orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public Date getOrderInTime() {
-        return orderInTime;
-    }
-
-    public void setOrderInTime(Date orderInTime) {
-        this.orderInTime = orderInTime;
-    }
-
-    public Date getOrderOutTime() {
-        return orderOutTime;
-    }
-
-    public void setOrderOutTime(Date orderOutTime) {
-        this.orderOutTime = orderOutTime;
-    }
-
     public int getOrderStateCode() {
         return orderStateCode;
     }
 
     public void setOrderStateCode(int orderStateCode) {
         this.orderStateCode = orderStateCode;
+    }
+
+    public String getOrderCustomerName() {
+        return orderCustomerName;
+    }
+
+    public void setOrderCustomerName(String orderCustomerName) {
+        this.orderCustomerName = orderCustomerName;
+    }
+
+    public String getOrderAddress() {
+        return orderAddress;
+    }
+
+    public void setOrderAddress(String orderAddress) {
+        this.orderAddress = orderAddress;
+    }
+
+    public String getOrderPhoneNumber() {
+        return orderPhoneNumber;
+    }
+
+    public void setOrderPhoneNumber(String orderPhoneNumber) {
+        this.orderPhoneNumber = orderPhoneNumber;
     }
 
 }

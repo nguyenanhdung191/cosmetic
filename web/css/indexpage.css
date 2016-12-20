@@ -18,10 +18,6 @@
     border-radius: 6px;
 }
 
-.stateChecking {
-    background-color: #fffca5;
-}
-
 .orderNo {
     font-weight: bold;
     font-size: 30px;
@@ -29,14 +25,14 @@
     color: #c90000;
     text-align: left;
     height: 50px;
-    width: 70%;
+    width: 75%;
     line-height: 50px;
 }
 
 .orderIcon {
 
     float: left;
-    width: 30%;
+    width: 25%;
     height: 50px;
 }
 
@@ -101,30 +97,31 @@
     font-weight: bold;
 }
 
-.modalBodyLeft{
-    float:left;
-    width:30%;
-    height:380px;
-}
-.modalBodyRight{
-    float:left;
-    width:65%;
+.modalBodyLeft {
+    float: left;
+    width: 30%;
+    height: 380px;
 }
 
-.modal-body{
+.modalBodyRight {
+    float: left;
+    width: 65%;
+}
+
+.modal-body {
     overflow: scroll;
-    height:400px;
+    height: 400px;
 }
 
-.modal-content{
+.modal-content {
     width: 80% !important;
 }
 
-.menuTreeItem{
+.menuTreeItem {
     text-decoration: none;
-    color:black;
+    color: black;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
